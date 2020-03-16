@@ -1,0 +1,94 @@
+---
+- id: 0
+  name: Extérieur
+  near:
+
+- id: 11
+  name: Hall
+  near:
+    - "10:front:down" # escalier sous-sol
+    - "12:left" # cuisine
+    - "13:right" # salon
+
+- id: 12
+  name: Cuisine
+  near:
+    - "11:right" # hall
+    - "15:front" # garde-manger
+
+- id: 13
+  name: Salon
+  near:
+    - "11:left" # hall
+    - "14:right" # bureau
+    - "20:front:up" # escalier étage
+
+- id: 14
+  name: Bureau
+  near:
+    - "13:left" # salon
+
+- id: 15
+  name: Garde-manger
+  near:
+    - "12:back" # cuisine
+
+- id: 3
+  name: Cave
+  near:
+    - "8:" # sous-sol
+
+- id: 4
+  name: Garage
+  near:
+    - 8 # sous-sol
+
+- id: 8
+  name: Sous-sol
+  near:
+    - 10 # escalier sous-sol
+    - 4 # garage
+    - 3 # cave
+
+- id: 10
+  name: Escalier sous-sol
+  near:
+    - 11 # hall
+    - 8 # sous-sol
+
+- id: 20
+  name: Escalier étage
+  near:
+    - 21 # couloir étage
+    -
+
+- id: 21
+  name: Couloir
+  near:
+    - 20 # escalier étage
+    - 30 # escalier grenier
+
+- id: 21
+  name: Chambre bleu étage
+  near:
+    - 21 # couloir
+
+- id: 12
+  name: Chambre verte étape
+  near:
+    - 21 # couloir
+    - 23 # chambre rouge
+
+- id: 23
+  name: Chambre rouge étape
+  near:
+    - 21 # couloir
+    - 12 # chambre verte
+
+- id: 30
+  name: Escalier grenier
+  near:
+    - 31 # grenier
+
+- id: 31
+  name: Grenier

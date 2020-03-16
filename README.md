@@ -12,7 +12,7 @@ Le jeu est forcément simple pour tester la viabilité du concept.
 
 L'histoire raconte un personnage, appelé « H » ici (pour Héroïne ou Héros) qui va devoir libérer un enfant kidnappé dans une sorte de petit château gardé par ses 10 ravisseurs.
 
-## PRINCIPE
+## PRINCIPES
 
 * Aucun scénario n'est prévu à l'avance.
 * Chaque personnage est animé d'un comportement propre qui rend imprévisible, en fonction des situations, ses actions.
