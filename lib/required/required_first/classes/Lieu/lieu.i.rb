@@ -52,6 +52,12 @@ class Gooo
       end
     end
 
+    # Retourne un autre lieu aléatoire à partir de ce lieu
+    def random_next_lieu
+      k = near_rooms.keys[rand(near_rooms.keys.count)]
+      near_rooms[k]
+    end
+
     # ---------------------------------------------------------------------
     #
     #     PROPRIÉTÉS

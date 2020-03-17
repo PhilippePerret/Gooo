@@ -12,7 +12,7 @@ class BadGuy
       else
         Gooo.config.badguys_count
       end.times do |i|
-        @threads << Thread.new { badguys_shuffled[i].set_up.move }
+        @threads << Thread.new { badguys_shuffled[i].set_up }
       end
       # On démarre les threads
       info("Nombre de méchants : #{@threads.count}")

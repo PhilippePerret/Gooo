@@ -23,7 +23,8 @@ class Gooo
     mainThread.join
 
   rescue Exception => e
-    info("### #{e.message.inspect}")
+    info("### #{e.message}")
+    info(e.backtrace.join(RC))
   ensure
     info("Le jeu est terminé")
     close_screen

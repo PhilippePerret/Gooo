@@ -20,15 +20,23 @@ class BadGuy
 
   # Méthode qui déplace le personnage
   def move
-
+    next_lieu = current_lieu.random_next_lieu
+    info("Le prochain lieu de #{name} sera #{next_lieu.le_name}")
+    imove = 0
+    while imove < 4 # 4 move dans chaque pièce
+      sleep (20.0 / speed)
+      imove += 1
+    end
+    on_come_in(next_lieu)
   end
 
   # Méthode appelée lorsque le personnage rentre dans une pièce
   def on_come_in(lieu)
-    current_lieu.rem_bad_guy unless current_lieu.nil?
+    current_lieu.rem_bad_guy(self) unless current_lieu.nil?
     lieu.add_bad_guy(self)
-    current_lieu = lieu
+    @current_lieu = lieu
     info("#{name} rentre dans #{current_lieu.le_name}")
+    move
   end
 
   # ---------------------------------------------------------------------

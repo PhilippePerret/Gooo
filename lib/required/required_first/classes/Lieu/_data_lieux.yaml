@@ -89,7 +89,7 @@
     - [27, down] # chambre verte
     - [25, up] # wc
     - [22, right] # chambre bleue
-    - 30 # escalier grenier
+    - [30, right] # escalier grenier
 
 - id: 24
   name: Salle de bains
@@ -109,7 +109,7 @@
   name: WC
   genre: P # pluriels
   near:
-    - 21 # étage couloir
+    - [21, down] # étage couloir
 
 - id: 27
   name: Chambre verte étage
