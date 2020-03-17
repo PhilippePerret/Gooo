@@ -19,3 +19,7 @@ L'histoire raconte un personnage, appelé « H » ici (pour Héroïne ou Héro
 * Les actions de chaque personnage sont influencées par des paramètres simples qui modifient son comportement : a) averti/non averti, b) début de journée/fin de journée, c) heure de la journée (moins fort après les repas), d) dans un bon/mauvais jour
 * Les comportements des personnages doivent être au maximum ceux qu'ils auraient dans la vraie vie. Pas de "fiction" abracadabrante. Par exemple, un personnage, l'héroïne ou le héros compris, n'utilise par un milliard d'armes différentes, mais possède son arme de prédilection.
 * Le gros du travail de conception réside dans la *définition des personnages*.
+
+## Le plan
+
+cf. [https://www.kozikaza.com/kazaplan/10664909/edit](https://www.kozikaza.com/kazaplan/10664909/edit)

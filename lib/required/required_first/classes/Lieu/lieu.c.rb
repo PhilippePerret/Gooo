@@ -4,16 +4,20 @@ class Lieu
   class << self
 
     def init
+      info("Initialisation des lieux…")
       lieux
+      info("Lieux initialisés.")
+    rescue Exception => e
+      info("### ERREUR : #{e.message.inspect}")
     end
 
     def get lieu_id
       @instances[lieu_id]
     end
 
-
-    def start_values
-      @values ||= [hall.as_value, cuisine.as_value, sous_sol.as_value]
+    # Retourne un lieu au hasard
+    def random
+      get(instances_keys[rand(lieux_count)])
     end
 
     # ---------------------------------------------------------------------
@@ -26,7 +30,6 @@ class Lieu
 
     # ---------------------------------------------------------------------
 
-
     def lieux
       @lieux ||= begin
         @instances = {}
@@ -36,6 +39,13 @@ class Lieu
           inst
         end
       end
+    end
+
+    def instances_keys
+      @instances_keys ||= @instances.keys
+    end
+    def lieux_count
+      @lieux_count ||= lieux.count
     end
 
     def data

@@ -1,0 +1,18 @@
+---
+- id: 0
+  name: Brox
+  sexe: H
+  force: 10
+  speed: 10
+
+- id: 1
+  name: Zack
+  sexe: H
+  force: 5
+  speed: 5
+
+- id: 2
+  name: Bernadette
+  sexe: F
+  force: 10
+  speed: 8

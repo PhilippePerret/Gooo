@@ -2,26 +2,56 @@
 class Gooo
 
   def run
+
+    # curses
+    init_screen
+    start_color
+
     Gooo.init_all
-    puts "Je lance le jeu"
-    puts "Lieu.start_values = #{Lieu.start_values.inspect}"
-    lieu = choisir_lieu_from()
-    puts "Vous entrez par #{lieu}"
-    next_lieu = choisir_lieu_from(lieu, "Où voulez-vous aller maintenant ?")
+    # On positionne les personnages et on les met en route
+    BadGuy.set_up
+    mainThread = Thread.new {
+      plan.win.keypad(true) # Pour utiliser KEY_DOWN, KEY_UP etc.
+      # On boucle jusqu'à ce qu'on sorte
+      lieu_id = 0
+      begin
+        plan.win.clear
+        lieu_id = choisir_lieu_from(Lieu.get(lieu_id))
+      end while lieu_id != 0
+    }
+    mainThread.join
+
+  rescue Exception => e
+    info("### #{e.message.inspect}")
+  ensure
+    info("Le jeu est terminé")
+    sleep 10
+    close_screen
   end
 
-  def choisir_lieu_from(lieu = nil, question = "Par où voulez-vous entrer ?")
-    lieux =
-      if lieu.nil?
-        Lieu.start_values
-      else
-        lieu.near_values
-      end
-    choix = Q.select(question) do |q|
-      q.choices lieux
-      q.per_page lieux.count
+  def choisir_lieu_from(lieu)
+    lieux = lieu.near_values
+    key = plan.win.getch
+
+    case key
+    when Key::DOWN
+      plan << "Flèche bas"
+    when Key::UP
+      plan << "Flèche haut"
+    when KEY_LEFT
+      plan << "Flèche gauche"
+    when KEY_RIGHT
+      plan << "Flèche droite"
+    else
+      plan << "Touche inconnue : #{key}"
     end
-    Lieu.get(choix)
+    puts "KEY_DOWN: #{Key::DOWN.inspect}/key:#{key.inspect}"
+    sleep 5
+    # # puts "lieux de #{lieu.name.upcase} : #{lieux.inspect}"
+    # Q.select("Vous êtes #{lieu.dans_hname.upcase.bleu}") do |q|
+    #   q.choices lieux
+    #   q.per_page lieux.count
+    # end
   end
 
 end #/Gooo

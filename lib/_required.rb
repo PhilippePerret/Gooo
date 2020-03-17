@@ -1,6 +1,10 @@
 # encoding: UTF-8
 require 'yaml'
 require 'tty-prompt'
+
+require 'curses'
+include Curses
+
 Q = TTY::Prompt.new
 
 APPFOLDER = File.expand_path(File.dirname(File.dirname(__FILE__)))

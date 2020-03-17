@@ -1,94 +1,168 @@
 ---
 - id: 0
   name: Extérieur
+  genre: E # ellipse => 'l’'
   near:
+    - [11, front]
+    - [12, left]
 
 - id: 11
   name: Hall
+  genre: M
   near:
-    - "10:front:down" # escalier sous-sol
-    - "12:left" # cuisine
-    - "13:right" # salon
+    - [10, front, down] # escalier sous-sol
+    - [12, left] # cuisine
+    - [13, right] # salon
+  output: [door, back]
 
 - id: 12
   name: Cuisine
+  genre: F
   near:
-    - "11:right" # hall
-    - "15:front" # garde-manger
+    - [11, right] # hall
+    - [15, front] # garde-manger
+  output: [door, left]
 
 - id: 13
   name: Salon
+  genre: M
   near:
-    - "11:left" # hall
-    - "14:right" # bureau
-    - "20:front:up" # escalier étage
+    - [11, left] # hall
+    - [14, right] # bureau
+    - [20, front, up] # escalier étage
+  output: [window, back]
 
 - id: 14
   name: Bureau
+  genre: M
   near:
-    - "13:left" # salon
+    - [13, left] # salon
+  output: [window, front]
 
 - id: 15
   name: Garde-manger
+  genre: M
   near:
-    - "12:back" # cuisine
+    - [12, back] # cuisine
 
 - id: 3
   name: Cave
+  genre: F
   near:
-    - "8:" # sous-sol
+    - [8, left] # sous-sol
 
 - id: 4
   name: Garage
+  genre: M
   near:
-    - 8 # sous-sol
+    - [8, left] # sous-sol
+  ouput: [door, back]
 
 - id: 8
   name: Sous-sol
+  genre: M
   near:
-    - 10 # escalier sous-sol
-    - 4 # garage
-    - 3 # cave
+    - [10, left] # escalier sous-sol
+    - [4, right] # garage
+    - [3, right] # cave
 
 - id: 10
-  name: Escalier sous-sol
+  name: Escalier vers le sous-sol
+  genre: E
   near:
-    - 11 # hall
-    - 8 # sous-sol
+    - [11, right, top] # hall
+    - [8, left] # sous-sol
 
 - id: 20
-  name: Escalier étage
+  name: Escalier vers l’étage
+  genre: E
   near:
-    - 21 # couloir étage
-    -
+    - [21, left] # couloir étage
+    - [11, right]
 
 - id: 21
-  name: Couloir
+  name: Couloir à l’étage
+  genre: M
   near:
     - 20 # escalier étage
+    - [24, left] # salle de bains
+    - [27, back] # chambre verte
+    - [25, front] # wc
+    - [22, right] # chambre bleue
     - 30 # escalier grenier
 
-- id: 21
-  name: Chambre bleu étage
+- id: 24
+  name: Salle de bains
+  genre: F
   near:
-    - 21 # couloir
+    - [21, right] # couleur étage
+    - [26, front] # dressing
+  output: [window, left, down]
 
-- id: 12
-  name: Chambre verte étape
+- id: 26
+  name: Dressing
+  genre: M
   near:
-    - 21 # couloir
-    - 23 # chambre rouge
+    - [24, back] # salle de bains
+
+- id: 25
+  name: WC
+  genre: P # pluriels
+  near:
+    - 21 # étage couloir
+
+- id: 27
+  name: Chambre verte étage
+  genre: F
+  near:
+    - [21, front] # couloir
+  output: [window, back, down]
+
+- id: 22
+  name: Chambre bleu étape
+  genre: F
+  near:
+    - [21, left] # couloir
+    - [23, front] # chambre rouge
+  output: [window, right, down]
 
 - id: 23
   name: Chambre rouge étape
+  genre: F
   near:
-    - 21 # couloir
-    - 12 # chambre verte
+    - [21, left] # couloir
+    - [22, back] # chambre bleue
+  output: [window, right, down]
 
 - id: 30
-  name: Escalier grenier
+  name: Escalier vers le grenier
+  genre: E
   near:
-    - 31 # grenier
+    - [31, back] # salle de billard
 
 - id: 31
+  name: Salle de billard
+  genre: F
+  near:
+    - [30, front] # escalier grenier
+    - [32, back] # Grenier
+    - [33, left] # Combles
+
+- id: 32
   name: Grenier
+  genre: M
+  near:
+    - [31, front]
+
+- id: 33
+  name: Combles
+  genre: P
+  near:
+    - [31, right]
+    - [34, left]
+
+- id: 34
+  name: Débarras
+  genre: M
+  near:
+    - [33, right]
