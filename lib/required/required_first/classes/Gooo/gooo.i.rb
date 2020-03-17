@@ -13,11 +13,12 @@ class Gooo
     mainThread = Thread.new {
       plan.win.keypad(true) # Pour utiliser KEY_DOWN, KEY_UP etc.
       # On boucle jusqu'à ce qu'on sorte
-      lieu_id = 0
+      current_lieu = Lieu.get(0)
       begin
         plan.win.clear
-        lieu_id = choisir_lieu_from(Lieu.get(lieu_id))
-      end while lieu_id != 0
+        current_lieu = choisir_lieu_from(current_lieu)
+        info("#{current_lieu.infos_directions}")
+      end while current_lieu.id != 0
     }
     mainThread.join
 
@@ -25,33 +26,23 @@ class Gooo
     info("### #{e.message.inspect}")
   ensure
     info("Le jeu est terminé")
-    sleep 10
     close_screen
+    puts MESSAGES.join(RC)
   end
 
   def choisir_lieu_from(lieu)
-    lieux = lieu.near_values
-    key = plan.win.getch
-
-    case key
-    when Key::DOWN
-      plan << "Flèche bas"
-    when Key::UP
-      plan << "Flèche haut"
-    when KEY_LEFT
-      plan << "Flèche gauche"
-    when KEY_RIGHT
-      plan << "Flèche droite"
-    else
-      plan << "Touche inconnue : #{key}"
+    while true
+      key =
+        case plan.win.getch
+        when KEY_DOWN   then :down
+        when KEY_UP     then :up
+        when KEY_LEFT   then :left
+        when KEY_RIGHT  then :right
+        when 'q' then raise("Fin du jeu demandé")
+        end
+      new_lieu = lieu.on_move_to(key)
+      return new_lieu unless new_lieu.nil?
     end
-    puts "KEY_DOWN: #{Key::DOWN.inspect}/key:#{key.inspect}"
-    sleep 5
-    # # puts "lieux de #{lieu.name.upcase} : #{lieux.inspect}"
-    # Q.select("Vous êtes #{lieu.dans_hname.upcase.bleu}") do |q|
-    #   q.choices lieux
-    #   q.per_page lieux.count
-    # end
   end
 
 end #/Gooo

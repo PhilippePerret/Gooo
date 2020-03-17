@@ -3,24 +3,24 @@
   name: Extérieur
   genre: E # ellipse => 'l’'
   near:
-    - [11, front]
+    - [11, up]
     - [12, left]
 
 - id: 11
   name: Hall
   genre: M
   near:
-    - [10, front, down] # escalier sous-sol
+    - [10, up, down] # escalier sous-sol
     - [12, left] # cuisine
     - [13, right] # salon
-  output: [door, back]
+  output: [door, down]
 
 - id: 12
   name: Cuisine
   genre: F
   near:
     - [11, right] # hall
-    - [15, front] # garde-manger
+    - [15, up] # garde-manger
   output: [door, left]
 
 - id: 13
@@ -29,21 +29,21 @@
   near:
     - [11, left] # hall
     - [14, right] # bureau
-    - [20, front, up] # escalier étage
-  output: [window, back]
+    - [20, up, up] # escalier étage
+  output: [window, down]
 
 - id: 14
   name: Bureau
   genre: M
   near:
     - [13, left] # salon
-  output: [window, front]
+  output: [window, up]
 
 - id: 15
   name: Garde-manger
   genre: M
   near:
-    - [12, back] # cuisine
+    - [12, down] # cuisine
 
 - id: 3
   name: Cave
@@ -56,7 +56,7 @@
   genre: M
   near:
     - [8, left] # sous-sol
-  ouput: [door, back]
+  ouput: [door, down]
 
 - id: 8
   name: Sous-sol
@@ -86,8 +86,8 @@
   near:
     - 20 # escalier étage
     - [24, left] # salle de bains
-    - [27, back] # chambre verte
-    - [25, front] # wc
+    - [27, down] # chambre verte
+    - [25, up] # wc
     - [22, right] # chambre bleue
     - 30 # escalier grenier
 
@@ -96,14 +96,14 @@
   genre: F
   near:
     - [21, right] # couleur étage
-    - [26, front] # dressing
+    - [26, up] # dressing
   output: [window, left, down]
 
 - id: 26
   name: Dressing
   genre: M
   near:
-    - [24, back] # salle de bains
+    - [24, down] # salle de bains
 
 - id: 25
   name: WC
@@ -115,15 +115,15 @@
   name: Chambre verte étage
   genre: F
   near:
-    - [21, front] # couloir
-  output: [window, back, down]
+    - [21, up] # couloir
+  output: [window, down, down]
 
 - id: 22
   name: Chambre bleu étape
   genre: F
   near:
     - [21, left] # couloir
-    - [23, front] # chambre rouge
+    - [23, up] # chambre rouge
   output: [window, right, down]
 
 - id: 23
@@ -131,28 +131,28 @@
   genre: F
   near:
     - [21, left] # couloir
-    - [22, back] # chambre bleue
+    - [22, down] # chambre bleue
   output: [window, right, down]
 
 - id: 30
   name: Escalier vers le grenier
   genre: E
   near:
-    - [31, back] # salle de billard
+    - [31, down] # salle de billard
 
 - id: 31
   name: Salle de billard
   genre: F
   near:
-    - [30, front] # escalier grenier
-    - [32, back] # Grenier
+    - [30, up] # escalier grenier
+    - [32, down] # Grenier
     - [33, left] # Combles
 
 - id: 32
   name: Grenier
   genre: M
   near:
-    - [31, front]
+    - [31, up]
 
 - id: 33
   name: Combles

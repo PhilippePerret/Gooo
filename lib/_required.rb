@@ -5,6 +5,9 @@ require 'tty-prompt'
 require 'curses'
 include Curses
 
+# Pour recevoir tous les messages émis et les redonner à la fin du jeu
+MESSAGES = []
+
 Q = TTY::Prompt.new
 
 APPFOLDER = File.expand_path(File.dirname(File.dirname(__FILE__)))

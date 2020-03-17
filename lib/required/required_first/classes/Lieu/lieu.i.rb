@@ -24,6 +24,34 @@ class Gooo
       @occupants.delete(badguy.id)
     end
 
+    # Méthode appelée quand on prend la direction +dir+ depuis cette
+    # pièce
+    # +Params+::
+    #   +dir+::[Symbol], :up, :down, :left ou :right
+    #
+    # +return+:: Le lieu, ou nil si aucun
+    def on_move_to(dir)
+      near_room_at(dir)
+    end
+
+    def near_room_at(dir)
+      near_rooms[dir]
+    end
+
+    # Affiche le lieu et les informations sur les directions
+    DIR_TO_FLECHE = {
+      up: '🔼', down: '🔽 ', left: '◀️ ', right: '▶️ '
+    }
+    def infos_directions
+      @infos_directions ||= begin
+        str = ["#{name.upcase}"]
+        near_rooms.each do |dir, lieu|
+          str << "#{DIR_TO_FLECHE[dir]}#{lieu.name}"
+        end
+        str.join(' ')
+      end
+    end
+
     # ---------------------------------------------------------------------
     #
     #     PROPRIÉTÉS
@@ -75,17 +103,16 @@ class Gooo
       @is_from_ext = value
     end
 
-
-    def near_values
-      @near_values ||= begin
-        choices = near.collect do |truplet|
+    def near_rooms
+      @near_rooms ||= begin
+        h = {}
+        near.each do |truplet|
           item_id, dirH, dirV = truplet
           nlieu = self.class.get(item_id)
-          nlieu.set_from_exterieur(exterieur?)
-          nlieu.as_value(dirH, dirV)
+          h.merge!(dirH.to_sym => nlieu)
         end
-        choices << {value:0, name: f_output} if output
-        choices
+        h.merge!(output[1].to_sym => Lieu.get(0)) if output
+        h
       end
     end
 

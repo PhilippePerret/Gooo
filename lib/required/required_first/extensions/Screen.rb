@@ -14,7 +14,7 @@ class BlockScreen
       @info ||= new({lines: 10, top: 30})
     end
     def plan
-      @plan ||= new({lines: 15, top: 0})
+      @plan ||= new({lines:15, top:0, height:15, width:0, left:2})
     end
 
   end #/ << self
@@ -27,9 +27,12 @@ class BlockScreen
   attr_reader :top
 
   def initialize hdata
-    @linecount  = hdata[:lines] || 1
-    @top        = hdata[:top]  || raise("Il faut définir le top du bloc d'écran")
-    @win        = Curses::Window.new(0, 0, @top, 2)
+    @linecount  = hdata[:lines]   || 1
+    @top        = hdata[:top]     || raise("Il faut définir le top du bloc d'écran")
+    @height     = hdata[:height]  || 10
+    @width      = hdata[:width]   || 0
+    @left       = hdata[:left]    || 2
+    @win        = Curses::Window.new(@linecount, @width, @top, @left)
     reset
   end
   def reset
@@ -39,17 +42,13 @@ class BlockScreen
   end
 
   def << msg
+    MESSAGES << msg
     @lines.pop
     @lines.unshift(msg)
-
-    # puts "@lines = #{@lines.inspect}"
-    # sleep 4
-
     print_lines
   end
   def print_lines
     setpos(top, 2)
-    # addstr(@lines.compact.join(RC).bleu)
     win.clear
     @lines.each do |line|
       next if line.nil?
