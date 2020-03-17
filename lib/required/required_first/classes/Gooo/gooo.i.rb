@@ -7,20 +7,23 @@ class Gooo
     init_screen
     start_color
 
+    info("--> Gooo.init_all")
     Gooo.init_all
-    info("Retour de Gooo.init_all")
+    info("<-- /fin Gooo.init_all")
 
     @threads = []
 
     mainThread = Thread.new {
+      $DEBUG = true
       plan.win.keypad(true) # Pour utiliser KEY_DOWN, KEY_UP etc.
       # On boucle jusqu'à ce qu'on sorte
-      current_lieu = Lieu.get(0)
+      PLAYER.current_lieu = Lieu.get(0)
       begin
-        plan.win.clear
-        state("#{current_lieu.infos_directions}")
-        current_lieu = choisir_lieu_from(current_lieu)
-      end while current_lieu.id != 0
+        info('--- Indication du lieu')
+        state("Vous êtes #{PLAYER.current_lieu.infos_directions}")
+        PLAYER.choisir_next_lieu
+        info("<-- choisir_next_lieu (#{PLAYER.current_lieu.name})")
+      end while PLAYER.current_lieu.id != 0
     }
     @threads << mainThread
 
@@ -29,40 +32,28 @@ class Gooo
     @threads +=  BadGuy.set_up
     info("<--- /BadGuy.set_up")
 
+    info("--> Démarrage des threads")
     @threads.each do |th|
       begin
         th.join
       rescue Exception => e
         close_screen
-        puts e.message.rouge
+        puts "### ERREUR DANS UN THREAD : #{e.message}".rouge
         puts e.backtrace.join(RC).rouge
-        raise
+        th.exit
       end
     end
+    info("<-- /Fin de démarrage des threads")
 
 
   rescue Exception => e
-    info("### #{e.message}")
+    info("### #{e}")
     info(e.backtrace.join(RC))
   ensure
-    info("Le jeu est terminé")
+    info("Le jeu est terminé.Merci d'avoir joué.", :info)
+    sleep 5
     close_screen
     puts MESSAGES.join(RC)
-  end
-
-  def choisir_lieu_from(lieu)
-    while true
-      key =
-        case plan.win.getch
-        when KEY_DOWN   then :down
-        when KEY_UP     then :up
-        when KEY_LEFT   then :left
-        when KEY_RIGHT  then :right
-        when 'q' then raise("Fin du jeu demandé")
-        end
-      new_lieu = lieu.on_move_to(key)
-      return new_lieu unless new_lieu.nil?
-    end
   end
 
 end #/Gooo

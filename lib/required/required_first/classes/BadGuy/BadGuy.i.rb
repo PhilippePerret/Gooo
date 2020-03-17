@@ -36,7 +36,11 @@ class BadGuy
     lieu.add_bad_guy(self)
     @current_lieu = lieu
     info("#{name} rentre dans #{current_lieu.le_name}")
-    move
+    if current_lieu.with_player?
+      info("LE PLAYER ET #{name.upcase} SONT DANS LA MÊME PIÈCE", :error)
+    else
+      move
+    end
   end
 
   # ---------------------------------------------------------------------

@@ -44,7 +44,7 @@ class Gooo
     }
     def infos_directions
       @infos_directions ||= begin
-        str = ["#{name.upcase}"]
+        str = ["#{dans_hname.upcase}"]
         near_rooms.each do |dir, lieu|
           str << "#{DIR_TO_FLECHE[dir]}#{lieu.name}"
         end
@@ -56,6 +56,20 @@ class Gooo
     def random_next_lieu
       k = near_rooms.keys[rand(near_rooms.keys.count)]
       near_rooms[k]
+    end
+
+    # +return+::[Boolean] true si le joueur est dans cette pièce
+    def with_player?
+      PLAYER.current_lieu.id == id
+    end
+
+    # +return+::[Boolean] True s'il y a des bad guys dans la pièce
+    def with_bad_guys?
+      @occupants.count > 0
+    end
+
+    def hlist_bad_guys
+      @occupants.values.collect{|badguy| badguy.name}
     end
 
     # ---------------------------------------------------------------------
@@ -115,7 +129,13 @@ class Gooo
         near.each do |truplet|
           item_id, dirH, dirV = truplet
           nlieu = self.class.get(item_id)
-          h.merge!(dirH.to_sym => nlieu)
+          begin
+            h.merge!(dirH.to_sym => nlieu)
+          rescue Exception => e
+            log("ERREUR DANS near_rooms AVEC #{truplet.inspect} : #{e.message}", :error)
+            log("#{e.backtrace.join(RC)}", :error)
+            raise "#{e.message}#{RC}#{e.backtrace.join(RC)}"
+          end
         end
         h.merge!(output[1].to_sym => Lieu.get(0)) if output
         h
