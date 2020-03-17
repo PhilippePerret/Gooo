@@ -8,19 +8,38 @@ class Gooo
     start_color
 
     Gooo.init_all
-    # On positionne les personnages et on les met en route
-    BadGuy.set_up
+    info("Retour de Gooo.init_all")
+
+    @threads = []
+
     mainThread = Thread.new {
       plan.win.keypad(true) # Pour utiliser KEY_DOWN, KEY_UP etc.
       # On boucle jusqu'à ce qu'on sorte
       current_lieu = Lieu.get(0)
       begin
         plan.win.clear
+        state("#{current_lieu.infos_directions}")
         current_lieu = choisir_lieu_from(current_lieu)
-        info("#{current_lieu.infos_directions}")
       end while current_lieu.id != 0
     }
-    mainThread.join
+    @threads << mainThread
+
+    # # On positionne les personnages et on les met en route
+    info("---> BadGuy.set_up")
+    @threads +=  BadGuy.set_up
+    info("<--- /BadGuy.set_up")
+
+    @threads.each do |th|
+      begin
+        th.join
+      rescue Exception => e
+        close_screen
+        puts e.message.rouge
+        puts e.backtrace.join(RC).rouge
+        raise
+      end
+    end
+
 
   rescue Exception => e
     info("### #{e.message}")

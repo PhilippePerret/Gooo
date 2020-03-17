@@ -16,7 +16,8 @@ class BadGuy
       end
       # On démarre les threads
       info("Nombre de méchants : #{@threads.count}")
-      @threads.each { |th| th.join }
+
+      return @threads
     end
 
     def badguys_shuffled

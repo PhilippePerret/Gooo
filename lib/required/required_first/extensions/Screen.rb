@@ -17,6 +17,10 @@ class BlockScreen
       @plan ||= new({lines:15, top:0, height:15, width:0, left:2})
     end
 
+    def user_state
+      @user_state ||= new({lines:2, top:28, height:2, left:2})
+    end
+
   end #/ << self
 
   # La fenêtre curse du block
@@ -37,12 +41,19 @@ class BlockScreen
   end
   def reset
     @lines = Array.new(linecount)
-    @color_green = 2
+    @color_blue = 1
+    init_pair(@color_blue, COLOR_CYAN, COLOR_BLACK)
+    @color_green  = 2
     init_pair(@color_green, COLOR_GREEN, COLOR_BLACK)
+    @color_red    = 3
+    init_pair(@color_red, COLOR_RED, COLOR_BLACK)
+    @color_orange = 4
+    init_pair(@color_orange, COLOR_YELLOW, COLOR_BLACK)
   end
 
   def << msg
-    MESSAGES << msg
+    msg = [msg, nil] unless msg.is_a?(Array)
+    MESSAGES << msg.first
     @lines.pop
     @lines.unshift(msg)
     print_lines
@@ -50,9 +61,10 @@ class BlockScreen
   def print_lines
     setpos(top, 2)
     win.clear
-    @lines.each do |line|
+    @lines.each do |dline|
+      line, color = dline
       next if line.nil?
-      win.attron(color_pair(@color_green)) { win << line }
+      win.attron(color_pair(color||@color_green)) { win << line }
       clrtoeol
       win << RC
     end
@@ -60,16 +72,20 @@ class BlockScreen
   end
 end
 
-def info(msg)
-  BlockScreen.info << msg
+def info(msg, type = nil)
+  type =  case type
+          when :info    then 1
+          when :error   then 3
+          when :warning then 4
+          else 2 # vert
+          end
+  BlockScreen.info << [msg, type]
+end
+
+def state(msg)
+  BlockScreen.user_state << [msg,1]
 end
 
 def plan
   @plan ||= BlockScreen.plan
-end
-
-def dbg(msg)
-  setpos(30, 2)
-  addstr(msg)
-  refresh
 end
